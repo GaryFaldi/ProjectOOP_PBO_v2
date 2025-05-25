@@ -4,8 +4,8 @@ public class BelahKetupat implements BangunGeometry {
     private double diagonal1;
     private double diagonal2;
     private double sisi;
-    protected double luas;
-    protected double keliling;
+    public double luas;
+    public double keliling;
 
     public BelahKetupat(double diagonal1, double diagonal2, double sisi) {
         this.diagonal1 = diagonal1;

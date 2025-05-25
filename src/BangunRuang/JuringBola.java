@@ -4,8 +4,8 @@ import BangunGeometry.Lingkaran;
 
 public class JuringBola extends Bola {
     private final double sudut;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public JuringBola(double jariJari, double sudut) {
         super(jariJari);

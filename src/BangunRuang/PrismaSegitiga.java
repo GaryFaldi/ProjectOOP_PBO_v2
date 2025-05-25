@@ -4,8 +4,8 @@ import BangunGeometry.Segitiga;
 
 public class PrismaSegitiga extends Segitiga {
     private final double tinggiPrisma;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public PrismaSegitiga(double alasSegitiga, double tinggiSegitiga,
                           double sisiA, double sisiB, double sisiC,

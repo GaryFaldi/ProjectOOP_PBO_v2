@@ -4,8 +4,8 @@ import BangunGeometry.Persegi;
 
 public class PrismaPersegi extends Persegi {
     private final double tinggiPrisma;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public PrismaPersegi(double sisiAlas, double tinggiPrisma) {
         super(sisiAlas);

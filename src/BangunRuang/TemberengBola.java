@@ -2,12 +2,14 @@ package BangunRuang;
 
 public class TemberengBola extends Bola {
     private final double tinggi;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public TemberengBola(double jariJari, double tinggi) {
         super(jariJari); // Panggil konstruktor Bola (superclass)
         this.tinggi = tinggi;
+        this.volume = hitungVolume();
+        this.luasPermukaan = hitungLuasPermukaan();
     }
 
     public double hitungVolume() {

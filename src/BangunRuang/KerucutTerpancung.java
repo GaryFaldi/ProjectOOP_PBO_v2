@@ -3,8 +3,8 @@ package BangunRuang;
 public class KerucutTerpancung extends Kerucut {
     private double jariJariKecil;
     private double tinggi;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public KerucutTerpancung(double jariJariBesar, double jariJariKecil, double tinggi) {
         super(jariJariBesar, tinggi); // hanya untuk pewarisan atribut

@@ -3,8 +3,8 @@ package BangunGeometry;
 public class PersegiPanjang implements BangunGeometry {
     protected double panjang;
     protected double lebar;
-    protected double luas;
-    protected double keliling;
+    public double luas;
+    public double keliling;
 
     public PersegiPanjang(double panjang, double lebar) {
         this.panjang = panjang;

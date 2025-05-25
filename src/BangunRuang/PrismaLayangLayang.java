@@ -4,8 +4,8 @@ import BangunGeometry.LayangLayang;
 
 public class PrismaLayangLayang extends LayangLayang {
     private final double tinggiPrisma;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public PrismaLayangLayang(double diagonal1, double diagonal2, double sisiPendek, double sisiPanjang, double tinggiPrisma) {
         super(diagonal1, diagonal2, sisiPendek, sisiPanjang);

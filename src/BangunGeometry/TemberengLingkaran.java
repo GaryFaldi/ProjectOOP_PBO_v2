@@ -2,8 +2,8 @@ package BangunGeometry;
 
 public class TemberengLingkaran extends Lingkaran {
     private double tinggiTembereng;
-    protected double luasTemberengLingkaran;
-    protected double kelilingTemberengLingkaran;
+    public double luasTemberengLingkaran;
+    public double kelilingTemberengLingkaran;
 
     public TemberengLingkaran(double jariJari, double tinggiTembereng) {
         super(jariJari);

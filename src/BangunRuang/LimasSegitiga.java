@@ -4,8 +4,8 @@ import BangunGeometry.Segitiga;
 
 public class LimasSegitiga extends Segitiga {
     private final double tinggiLimas; // tinggi dari puncak ke alas segitiga
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public LimasSegitiga(double alasSegitiga, double tinggiSegitiga,
                          double sisiA, double sisiB, double sisiC,

@@ -2,8 +2,8 @@ package BangunRuang;
 
 public class CincinBola extends Bola {
     private final double jariJariDalam;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public CincinBola(double jariJari, double jariJariDalam) {
         super(jariJari);
@@ -11,13 +11,6 @@ public class CincinBola extends Bola {
         this.volume = hitungVolume();
         this.luasPermukaan = hitungLuasPermukaan();
     }
-
-    public double hitungLuasCincin() {
-        double luasLuar = Math.PI * jariJari * jariJari;
-        double luasDalam = Math.PI * jariJariDalam * jariJariDalam;
-        return luasLuar - luasDalam;
-    }
-
 
     public double hitungLuasPermukaan() {
         // Misal kita anggap luas permukaan cincin bola adalah selisih permukaan 2 bola

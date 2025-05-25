@@ -6,8 +6,8 @@ public class Trapesium implements BangunGeometry {
     protected double tinggi;
     protected double sisiMiringKiri;
     protected double sisiMiringKanan;
-    protected double luas;
-    protected double keliling;
+    public double luas;
+    public double keliling;
 
     public Trapesium(double sisiAtas, double sisiBawah, double tinggi, double sisiMiringKiri, double sisiMiringKanan) {
         this.sisiAtas = sisiAtas;

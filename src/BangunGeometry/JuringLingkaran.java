@@ -2,8 +2,8 @@ package BangunGeometry;
 
 public class JuringLingkaran extends Lingkaran {
     private double sudutDerajat;
-    protected double luasJuringLingkaran;
-    protected double kelilingJuringLingkaran;
+    public double luasJuringLingkaran;
+    public double kelilingJuringLingkaran;
 
     public JuringLingkaran(double jariJari, double sudutDerajat) {
         super(jariJari);
@@ -13,11 +13,11 @@ public class JuringLingkaran extends Lingkaran {
     }
 
     public double hitungLuas() {
-        return (sudutDerajat / 360.0) * luas;
+        return (sudutDerajat / 360) * luas;
     }
 
     public double hitungKeliling() {
-        double panjangBusur = (sudutDerajat / 360.0) * keliling;
+        double panjangBusur = (sudutDerajat / 360) * keliling;
         return panjangBusur + 2 * jariJari;
     }
 

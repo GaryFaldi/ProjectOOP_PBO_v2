@@ -4,8 +4,8 @@ public class JajarGenjang implements BangunGeometry {
     protected double alas;
     private double tinggi;
     private double sisiMiring;
-    protected double luas;
-    protected double keliling;
+    public double luas;
+    public double keliling;
 
     public JajarGenjang(double alas, double tinggi, double sisiMiring) {
         this.alas = alas;

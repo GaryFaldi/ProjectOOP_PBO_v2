@@ -5,8 +5,8 @@ public class LayangLayang implements BangunGeometry {
     protected double diagonal2;
     protected double sisiPendek;
     protected double sisiPanjang;
-    protected double luas;
-    protected double keliling;
+    public double luas;
+    public double keliling;
 
     public LayangLayang(double diagonal1, double diagonal2, double sisiPendek, double sisiPanjang) {
         this.diagonal1 = diagonal1;

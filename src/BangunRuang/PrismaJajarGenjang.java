@@ -4,8 +4,8 @@ import BangunGeometry.JajarGenjang;
 
 public class PrismaJajarGenjang extends JajarGenjang {
     private final double tinggiPrisma;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public PrismaJajarGenjang(double alas, double tinggi, double sisiMiring, double tinggiPrisma) {
         super(alas, tinggi, sisiMiring); // mewarisi dan menghitung luas & keliling

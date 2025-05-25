@@ -4,8 +4,8 @@ import BangunGeometry.BelahKetupat;
 
 public class LimasBelahKetupat extends BelahKetupat {
     private double tinggi;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public LimasBelahKetupat(double diagonal1, double diagonal2, double sisi, double tinggi) {
         super(diagonal1, diagonal2, sisi);

@@ -4,8 +4,8 @@ import BangunGeometry.PersegiPanjang;
 
 public class LimasPersegiPanjang extends PersegiPanjang{
     private final double tinggiLimas;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public LimasPersegiPanjang(double panjang, double lebar, double tinggiLimas) {
         super(panjang, lebar);

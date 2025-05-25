@@ -2,8 +2,8 @@ package BangunGeometry;
 
 public class Lingkaran implements BangunGeometry {
     protected double jariJari;
-    protected double luas;
-    protected double keliling;
+    public double luas;
+    public double keliling;
 
     public Lingkaran(double jariJari) {
         this.jariJari = jariJari;

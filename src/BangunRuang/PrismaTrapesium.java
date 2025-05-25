@@ -4,8 +4,8 @@ import BangunGeometry.Trapesium;
 
 public class PrismaTrapesium extends Trapesium {
     private final double tinggiPrisma;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public PrismaTrapesium(double sisiAtas, double sisiBawah, double tinggiTrapesium,
                            double sisiMiring1, double sisiMiring2, double tinggiPrisma) {

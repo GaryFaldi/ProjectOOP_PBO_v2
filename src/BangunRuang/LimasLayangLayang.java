@@ -4,8 +4,8 @@ import BangunGeometry.LayangLayang;
 
 public class LimasLayangLayang extends LayangLayang {
     private final double tinggiLimas;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public LimasLayangLayang(double diagonal1, double diagonal2,
                              double sisiPendek, double sisiPanjang,

@@ -4,8 +4,8 @@ import BangunGeometry.JajarGenjang;
 
 public class LimasJajarGenjang extends JajarGenjang {
     private final double tinggi; // tinggi dari alas ke puncak
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public LimasJajarGenjang(double alas, double tinggiAlas, double sisiMiring, double tinggi) {
         super(alas, tinggiAlas, sisiMiring); // menghitung luas dan keliling di sini

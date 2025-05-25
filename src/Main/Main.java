@@ -14,99 +14,188 @@ public class Main {
         System.out.println("Keliling   : " + segitiga.keliling);
 
         // Memanggil class Persegi
-        BangunGeometry Persegi = new Persegi(4);
+        Persegi persegi = new Persegi(4);
+        System.out.println("Nama Bangun: " + persegi.getNama());
+        System.out.println("Luas       : " + persegi.luas);
+        System.out.println("Keliling   : " + persegi.keliling);
 
         // Memanggil class PersegiPanjang
-        BangunGeometry PersegiPanjang = new PersegiPanjang(4, 6);
+        PersegiPanjang persegiPanjang = new PersegiPanjang(4, 6);
+        System.out.println("Nama Bangun: " + persegiPanjang.getNama());
+        System.out.println("Luas       : " + persegiPanjang.luas);
+        System.out.println("Keliling   : " + persegiPanjang.keliling);
 
-        // Memanggil class JajaranGenjang
-        BangunGeometry JajaranGenjang = new JajarGenjang(5, 7, 6);
+        // Memanggil class JajarGenjang
+        JajarGenjang jajarGenjang = new JajarGenjang(5, 7, 6);
+        System.out.println("Nama Bangun: " + jajarGenjang.getNama());
+        System.out.println("Luas       : " + jajarGenjang.luas);
+        System.out.println("Keliling   : " + jajarGenjang.keliling);
 
         // Memanggil class Trapesium
-        BangunGeometry Trapesium = new Trapesium(4, 6, 5, 6, 6);
+        Trapesium trapesium = new Trapesium(4, 6, 5, 6, 6);
+        System.out.println("Nama Bangun: " + trapesium.getNama());
+        System.out.println("Luas       : " + trapesium.luas);
+        System.out.println("Keliling   : " + trapesium.keliling);
 
         // Memanggil class BelahKetupat
-        BangunGeometry BelahKetupat = new BelahKetupat(10, 8, 6);
+        BelahKetupat belahKetupat = new BelahKetupat(10, 8, 6);
+        System.out.println("Nama Bangun: " + belahKetupat.getNama());
+        System.out.println("Luas       : " + belahKetupat.luas);
+        System.out.println("Keliling   : " + belahKetupat.keliling);
 
         // Memanggil class LayangLayang
-        BangunGeometry LayangLayang = new LayangLayang(3, 4, 5, 6);
+        LayangLayang layangLayang = new LayangLayang(5, 8, 5, 6);
+        System.out.println("Nama Bangun: " + layangLayang.getNama());
+        System.out.println("Luas       : " + layangLayang.luas);
+        System.out.println("Keliling   : " + layangLayang.keliling);
 
         // Memanggil class Lingkaran
-        BangunGeometry Lingkaran = new Lingkaran(7);
+        Lingkaran lingkaran = new Lingkaran(4);
+        System.out.println("Nama Bangun: " + lingkaran.getNama());
+        System.out.println("Luas       : " + lingkaran.luas);
+        System.out.println("Keliling   : " + lingkaran.keliling);
 
         // Memanggil class TemberengLingkaran
-        BangunGeometry TemberengLingkaran = new TemberengLingkaran(7, 60);
+        TemberengLingkaran temberengLingkaran = new TemberengLingkaran(7, 9);
+        System.out.println("Nama Bangun: " + temberengLingkaran.getNama());
+        System.out.println("Luas       : " + temberengLingkaran.luasTemberengLingkaran);
+        System.out.println("Keliling   : " + temberengLingkaran.kelilingTemberengLingkaran);
 
         // Memanggil class JuringLingkaran
-        BangunGeometry JuringLingkaran = new JuringLingkaran(7, 90);
+        JuringLingkaran juringLingkaran = new JuringLingkaran(7, 45);
+        System.out.println("Nama Bangun: " + juringLingkaran.getNama());
+        System.out.println("Luas       : " + juringLingkaran.luasJuringLingkaran);
+        System.out.println("Keliling   : " + juringLingkaran.kelilingJuringLingkaran);
 
         System.out.println("F");
         System.out.println("================ Bangun Ruang ===================");
         System.out.println("F");
 
         // Memanggil class PrismaSegitiga
-        BangunGeometry PrismaSegitiga = new PrismaSegitiga(5, 8, 10, 10, 10, 9);
+        PrismaSegitiga prismaSegitiga = new PrismaSegitiga(5, 8, 10, 10, 10, 9);
+        System.out.println("Nama Bangun   : " + prismaSegitiga.getNama());
+        System.out.println("Volume        : " + prismaSegitiga.volume);
+        System.out.println("Luas Permukaan: " + prismaSegitiga.luasPermukaan);
 
         // Memanggil class LimasSegitiga
-        BangunGeometry LimasSegitiga = new LimasSegitiga(5, 8, 10, 10, 10, 9);
+        LimasSegitiga limasSegitiga = new LimasSegitiga(5, 8, 10, 10, 10, 9);
+        System.out.println("Nama Bangun   : " + limasSegitiga.getNama());
+        System.out.println("Volume        : " + limasSegitiga.volume);
+        System.out.println("Luas Permukaan: " + limasSegitiga.luasPermukaan);
 
         // Memanggil class PrismaPersegi
-        BangunGeometry PrismaPersegi = new PrismaPersegi(4, 10);
+        PrismaPersegi prismaPersegi = new PrismaPersegi(4, 10);
+        System.out.println("Nama Bangun   : " + prismaPersegi.getNama());
+        System.out.println("Volume        : " + prismaPersegi.volume);
+        System.out.println("Luas Permukaan: " + prismaPersegi.luasPermukaan);
 
         // Memanggil class LimasPersegi
-        BangunGeometry LimasPersegi = new LimasPersegi( 4,10);
+        LimasPersegi limasPersegi = new LimasPersegi( 4,10);
+        System.out.println("Nama Bangun   : " + limasPersegi.getNama());
+        System.out.println("Volume        : " + limasPersegi.volume);
+        System.out.println("Luas Permukaan: " + limasPersegi.luasPermukaan);
 
         // Memanggil class PrismaPersegiPanjang
-        BangunGeometry PrismaPersegiPanjang = new PrismaPersegiPanjang(4, 6, 10);
+        PrismaPersegiPanjang prismaPersegiPanjang = new PrismaPersegiPanjang(4, 6, 10);
+        System.out.println("Nama Bangun   : " + prismaPersegiPanjang.getNama());
+        System.out.println("Volume        : " + prismaPersegiPanjang.volume);
+        System.out.println("Luas Permukaan: " + prismaPersegiPanjang.luasPermukaan);
 
         // Memanggil class LimasPersegiPanjang
-        BangunGeometry LimasPersegiPanjang = new LimasPersegiPanjang(4, 6, 10);
+        LimasPersegiPanjang limasPersegiPanjang = new LimasPersegiPanjang(4, 6, 10);
+        System.out.println("Nama Bangun   : " + limasPersegiPanjang.getNama());
+        System.out.println("Volume        : " + limasPersegiPanjang.volume);
+        System.out.println("Luas Permukaan: " + limasPersegiPanjang.luasPermukaan);
 
-        // Memanggil class PrismaJajaranGenjang
-        BangunGeometry PrismaJajaranGenjang = new PrismaJajarGenjang(5, 7, 6, 10);
+        // Memanggil class PrismaJajarGenjang
+        PrismaJajarGenjang prismaJajarGenjang = new PrismaJajarGenjang(5, 7, 6, 10);
+        System.out.println("Nama Bangun   : " + prismaJajarGenjang.getNama());
+        System.out.println("Volume        : " + prismaJajarGenjang.volume);
+        System.out.println("Luas Permukaan: " + prismaJajarGenjang.luasPermukaan);
 
-        // Memanggil class LimasJajaranGenjang
-        BangunGeometry LimasJajaranGenjang = new LimasJajarGenjang(5, 7, 6, 10);
+        // Memanggil class LimasJajarGenjang
+        LimasJajarGenjang limasJajarGenjang = new LimasJajarGenjang(5, 7, 6, 10);
+        System.out.println("Nama Bangun   : " + limasJajarGenjang.getNama());
+        System.out.println("Volume        : " + limasJajarGenjang.volume);
+        System.out.println("Luas Permukaan: " + limasJajarGenjang.luasPermukaan);
 
         // Memanggil class PrismaTrapesium
-        BangunGeometry PrismaTrapesium = new PrismaTrapesium(4, 6, 5, 10, 6, 6);
+        PrismaTrapesium prismaTrapesium = new PrismaTrapesium(4, 6, 5, 10, 6, 6);
+        System.out.println("Nama Bangun   : " + prismaTrapesium.getNama());
+        System.out.println("Volume        : " + prismaTrapesium.volume);
+        System.out.println("Luas Permukaan: " + prismaTrapesium.luasPermukaan);
 
         // Memanggil class LimasTrapesium
-        BangunGeometry LimasTrapesium = new LimasTrapesium(4, 6, 5, 10, 10, 11);
+        LimasTrapesium limasTrapesium = new LimasTrapesium(4, 6, 5, 10, 10, 11);
+        System.out.println("Nama Bangun   : " + limasTrapesium.getNama());
+        System.out.println("Volume        : " + limasTrapesium.volume);
+        System.out.println("Luas Permukaan: " + limasTrapesium.luasPermukaan);
 
         // Memanggil class PrismaBelahKetupat
-        BangunGeometry PrismaBelahKetupat = new PrismaBelahKetupat(4, 6, 10, 9);
+        PrismaBelahKetupat prismaBelahKetupat = new PrismaBelahKetupat(4, 6, 10, 9);
+        System.out.println("Nama Bangun   : " + prismaBelahKetupat.getNama());
+        System.out.println("Volume        : " + prismaBelahKetupat.volume);
+        System.out.println("Luas Permukaan: " + prismaBelahKetupat.luasPermukaan);
 
         // Memanggil class LimasBelahKetupat
-        BangunGeometry LimasBelahKetupat = new LimasBelahKetupat(4, 6, 10, 9);
+        LimasBelahKetupat limasBelahKetupat = new LimasBelahKetupat(4, 6, 10, 9);
+        System.out.println("Nama Bangun   : " + limasBelahKetupat.getNama());
+        System.out.println("Volume        : " + limasBelahKetupat.volume);
+        System.out.println("Luas Permukaan: " + limasBelahKetupat.luasPermukaan);
 
         // Memanggil class PrismaLayangLayang
-        BangunGeometry PrismaLayangLayang = new PrismaLayangLayang(3, 4, 5, 10, 4);
+        PrismaLayangLayang prismaLayangLayang = new PrismaLayangLayang(3, 4, 5, 10, 4);
+        System.out.println("Nama Bangun   : " + prismaLayangLayang.getNama());
+        System.out.println("Volume        : " + prismaLayangLayang.volume);
+        System.out.println("Luas Permukaan: " + prismaLayangLayang.luasPermukaan);
 
         // Memanggil class LimasLayangLayang
-        BangunGeometry LimasLayangLayang = new LimasLayangLayang(3, 4, 5, 10, 4);
+        LimasLayangLayang limasLayangLayang = new LimasLayangLayang(3, 4, 5, 10, 4);
+        System.out.println("Nama Bangun   : " + limasLayangLayang.getNama());
+        System.out.println("Volume        : " + limasLayangLayang.volume);
+        System.out.println("Luas Permukaan: " + limasLayangLayang.luasPermukaan);
 
         // Memanggil class Tabung
-        BangunGeometry Tabung = new Tabung(7, 10);
+        Tabung tabung = new Tabung(1, 10);
+        System.out.println("Nama Bangun   : " + tabung.getNama());
+        System.out.println("Volume        : " + tabung.volume);
+        System.out.println("Luas Permukaan: " + tabung.luasPermukaan);
 
         // Memanggil class Kerucut
-        BangunGeometry Kerucut = new Kerucut(7, 10);
+        Kerucut kerucut = new Kerucut(1, 10);
+        System.out.println("Nama Bangun   : " + kerucut.getNama());
+        System.out.println("Volume        : " + kerucut.volume);
+        System.out.println("Luas Permukaan: " + kerucut.luasPermukaan);
 
         // Memanggil class KerucutTerpancung
-        BangunGeometry KerucutTerpancung = new KerucutTerpancung(7, 10, 5);
+        KerucutTerpancung kerucutTerpancung = new KerucutTerpancung(4, 2, 5);
+        System.out.println("Nama Bangun   : " + kerucutTerpancung.getNama());
+        System.out.println("Volume        : " + kerucutTerpancung.volume);
+        System.out.println("Luas Permukaan: " + kerucutTerpancung.luasPermukaan);
 
         // Memanggil class Bola
-        BangunGeometry Bola = new Bola(7);
+        Bola bola = new Bola(1);
+        System.out.println("Nama Bangun   : " + bola.getNama());
+        System.out.println("Volume        : " + bola.volume);
+        System.out.println("Luas Permukaan: " + bola.luasPermukaan);
 
         // Memanggil class TemberengBola
-        BangunGeometry TemberengBola = new TemberengBola(7, 60);
+        TemberengBola temberengBola = new TemberengBola(3, 5);
+        System.out.println("Nama Bangun   : " + temberengBola.getNama());
+        System.out.println("Volume        : " + temberengBola.volume);
+        System.out.println("Luas Permukaan: " + temberengBola.luasPermukaan);
 
         // Memanggil class JuringBola
-        BangunGeometry JuringBola = new JuringBola(7, 90);
+        JuringBola juringBola = new JuringBola(3, 180);
+        System.out.println("Nama Bangun   : " + juringBola.getNama());
+        System.out.println("Volume        : " + juringBola.volume);
+        System.out.println("Luas Permukaan: " + juringBola.luasPermukaan);
 
         // Memanggil class CincinBola
-        BangunGeometry CincinBola = new CincinBola(7, 10);
-
+        CincinBola cincinBola = new CincinBola(3, 2);
+        System.out.println("Nama Bangun   : " + cincinBola.getNama());
+        System.out.println("Volume        : " + cincinBola.volume);
+        System.out.println("Luas Permukaan: " + cincinBola.luasPermukaan);
 
     }
 }

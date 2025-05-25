@@ -2,8 +2,8 @@ package BangunGeometry;
 
 public class Persegi implements BangunGeometry {
     protected double sisi;
-    protected double luas;
-    protected double keliling;
+    public double luas;
+    public double keliling;
 
     public Persegi(double sisi) {
         this.sisi = sisi;

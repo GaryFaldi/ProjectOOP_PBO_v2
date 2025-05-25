@@ -4,8 +4,8 @@ import BangunGeometry.Lingkaran;
 
 public class Kerucut extends Lingkaran {
     private double tinggi;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
     public Kerucut(double jariJari, double tinggi) {
         super(jariJari);

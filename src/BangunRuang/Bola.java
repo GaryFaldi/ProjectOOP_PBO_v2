@@ -3,11 +3,11 @@ package BangunRuang;
 import BangunGeometry.Lingkaran;
 
 public class Bola extends Lingkaran {
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
 
-    public Bola(double jariJari) {
-        super(jariJari);
+    public Bola(double jariJariBola) {
+        super(jariJariBola);
         this.volume = hitungVolume();
         this.luasPermukaan = hitungLuasPermukaan();
     }
