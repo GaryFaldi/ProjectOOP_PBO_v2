@@ -1,7 +1,7 @@
 package Main;
 
 import BangunGeometry.*;
-import BangunRuang.*;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -176,8 +176,10 @@ public class Main {
         // Memanggil class Bola
         Bola bola = new Bola(1);
         System.out.println("Nama Bangun   : " + bola.getNama());
-        System.out.println("Volume        : " + bola.volume);
-        System.out.println("Luas Permukaan: " + bola.luasPermukaan);
+        double volumeBaru = bola.hitungVolume(0);
+        System.out.println("Volume        : " + volumeBaru);
+        double luasBaru = bola.hitungLuasPermukaan(0);
+        System.out.println("Luas Permukaan: " + luasBaru);
 
         // Memanggil class TemberengBola
         TemberengBola temberengBola = new TemberengBola(3, 5);

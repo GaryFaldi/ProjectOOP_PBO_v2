@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class Lingkaran implements BangunGeometry {
+public class Lingkaran extends BangunDatar{
     protected double jariJari;
     public double luas;
     public double keliling;
@@ -11,16 +11,25 @@ public class Lingkaran implements BangunGeometry {
         this.keliling = hitungKeliling();
     }
 
-    public double hitungLuas() {
-        return Math.PI * jariJari * jariJari;
-    }
-
-    public double hitungKeliling() {
-        return 2 * Math.PI * jariJari;
-    }
-
     @Override
     public String getNama() {
         return "Lingkaran";
+    }
+
+    @Override
+    public double hitungLuas() {
+        luas = Math.PI * Math.pow(jariJari, 2);
+        return luas;
+    }
+
+    
+    public double hitungLuas(double newR) {
+        return  Math.PI * Math.pow(newR, 2);
+    }
+
+    @Override
+    public double hitungKeliling() {
+        keliling = Math.PI * jariJari * 2;
+        return keliling;
     }
 }

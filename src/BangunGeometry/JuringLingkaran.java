@@ -8,14 +8,15 @@ public class JuringLingkaran extends Lingkaran {
     public JuringLingkaran(double jariJari, double sudutDerajat) {
         super(jariJari);
         this.sudutDerajat = sudutDerajat;
-        this.luasJuringLingkaran = hitungLuas();
+        this.luasJuringLingkaran = hitungLuasJuringLingkaran();
         this.kelilingJuringLingkaran = hitungKeliling();
     }
 
-    public double hitungLuas() {
+    public double hitungLuasJuringLingkaran() {
         return (sudutDerajat / 360) * luas;
     }
-
+    
+    @Override
     public double hitungKeliling() {
         double panjangBusur = (sudutDerajat / 360) * keliling;
         return panjangBusur + 2 * jariJari;

@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class LayangLayang implements BangunGeometry {
+public class LayangLayang extends BangunDatar {
     protected double diagonal1;
     protected double diagonal2;
     protected double sisiPendek;
@@ -16,11 +16,13 @@ public class LayangLayang implements BangunGeometry {
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }
-
+    
+    @Override
     public double hitungLuas() {
         return 0.5 * diagonal1 * diagonal2;
     }
-
+    
+    @Override
     public double hitungKeliling() {
         return 2 * (sisiPendek + sisiPanjang);
     }

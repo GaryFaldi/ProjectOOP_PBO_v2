@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class Segitiga implements BangunGeometry {
+public class Segitiga extends BangunDatar {
     protected double tinggi;
     protected double sisiA;
     protected double sisiB;
@@ -17,14 +17,17 @@ public class Segitiga implements BangunGeometry {
         this.keliling = hitungKeliling();
     }
 
+    @Override
     public double hitungLuas() {
         return 0.5 * sisiA * tinggi;
     }
 
+    @Override
     public double hitungKeliling() {
         return sisiA + sisiB + sisiC;
     }
 
+    @Override
     public String getNama() { return "Segitiga"; }
 
 }

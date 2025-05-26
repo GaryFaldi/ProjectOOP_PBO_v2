@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class Trapesium implements BangunGeometry {
+public class Trapesium extends BangunDatar {
     protected double sisiAtas;
     protected double sisiBawah;
     protected double tinggi;
@@ -19,14 +19,17 @@ public class Trapesium implements BangunGeometry {
         this.keliling = hitungKeliling();
     }
 
+    @Override
     public double hitungLuas() {
         return 0.5 * (sisiAtas + sisiBawah) * tinggi;
     }
 
+    @Override
     public double hitungKeliling() {
         return sisiAtas + sisiBawah + sisiMiringKiri + sisiMiringKanan;
     }
 
+    @Override
     public String getNama() {
         return "Traoesium";
     }

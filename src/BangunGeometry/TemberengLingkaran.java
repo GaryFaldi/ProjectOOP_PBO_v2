@@ -12,6 +12,7 @@ public class TemberengLingkaran extends Lingkaran {
         this.kelilingTemberengLingkaran = hitungKeliling();
     }
 
+    @Override
     public double hitungLuas() {
         double sudut = 2 * Math.acos((jariJari - tinggiTembereng) / jariJari);
         double luasJuring = 0.5 * sudut * jariJari * jariJari;
@@ -19,6 +20,7 @@ public class TemberengLingkaran extends Lingkaran {
         return luasJuring - luasSegitiga;
     }
 
+    @Override
     public double hitungKeliling() {
         double sudut = 2 * Math.acos((jariJari - tinggiTembereng) / jariJari);
         double panjangBusur = sudut * jariJari;
@@ -26,6 +28,7 @@ public class TemberengLingkaran extends Lingkaran {
         return panjangBusur + panjangTaliBusur;
     }
 
+    @Override
     public String getNama(){
         return "TemberengLingkaran";
     }

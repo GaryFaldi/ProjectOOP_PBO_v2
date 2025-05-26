@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class BelahKetupat implements BangunGeometry {
+public class BelahKetupat extends BangunDatar {
     private double diagonal1;
     private double diagonal2;
     private double sisi;
@@ -14,11 +14,13 @@ public class BelahKetupat implements BangunGeometry {
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }
-
+    
+    @Override
     public double hitungLuas() {
         return 0.5 * diagonal1 * diagonal2;
     }
-
+    
+    @Override
     public double hitungKeliling() {
         return 4 * sisi;
     }
