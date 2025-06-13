@@ -22,7 +22,6 @@ public class Lingkaran extends BangunDatar{
         return luas;
     }
 
-    
     public double hitungLuas(double newR) {
         return  Math.PI * Math.pow(newR, 2);
     }
@@ -30,6 +29,11 @@ public class Lingkaran extends BangunDatar{
     @Override
     public double hitungKeliling() {
         keliling = Math.PI * jariJari * 2;
+        return keliling;
+    }
+
+    public double hitungKeliling(double newR) {
+        keliling = Math.PI * newR * 2;
         return keliling;
     }
 }

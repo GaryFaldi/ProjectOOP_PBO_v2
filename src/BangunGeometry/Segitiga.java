@@ -19,12 +19,24 @@ public class Segitiga extends BangunDatar {
 
     @Override
     public double hitungLuas() {
-        return 0.5 * sisiA * tinggi;
+        luas = 0.5 * sisiA * tinggi;
+        return luas;
+    }
+
+    public double hitungLuas(double newSisiA, double newTinggi) {
+        luas = 0.5 * newSisiA * newTinggi;
+        return luas;
     }
 
     @Override
     public double hitungKeliling() {
-        return sisiA + sisiB + sisiC;
+        keliling = sisiA + sisiB + sisiC;
+        return keliling;
+    }
+
+    public double hitungKeliling(double newSisiA, double newSisiB, double newSisiC) {
+        keliling = newSisiA + newSisiB + newSisiC;
+        return keliling;
     }
 
     @Override

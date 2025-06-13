@@ -1,9 +1,13 @@
 package BangunGeometry;
 
+import java.util.Scanner;
+
 public class TemberengBola extends Bola {
     private final double tinggi;
     public double volume;
     public double luasPermukaan;
+    protected double newR;
+    char  jawab  = 'Y';
 
     public TemberengBola(double jariJari, double tinggi) {
         super(jariJari); // Panggil konstruktor Bola (superclass)
@@ -13,12 +17,41 @@ public class TemberengBola extends Bola {
     }
 
     public double hitungVolume() {
-        return (1.0 / 3.0) * Math.PI * tinggi * tinggi * (3 * super.jariJari - tinggi);
+        volume = (1.0 / 3.0) * Math.PI * tinggi * tinggi * (3 * super.jariJari - tinggi);
+        return volume;
+    }
+
+    public double hitungVolume(double newR) {
+        System.out.println("apakah anda akan mengedit value jari-jari?");
+        if(jawab == 'Y' || jawab =='y'){
+            Scanner inp = new Scanner(System.in);
+            System.out.println("Masukan nilai jari-jari baru");
+            newR = inp.nextDouble();
+            volume = (1.0 / 3.0) * Math.PI * tinggi * tinggi * (3 * newR - tinggi);
+            return volume;
+        }else{
+            volume = (1.0 / 3.0) * Math.PI * tinggi * tinggi * (3 * super.jariJari - tinggi);
+            return volume;
+        }
     }
 
     public double hitungLuasPermukaan() {
-        double alas = Math.PI * Math.pow(super.jariJari, 2);
-        return 2 * Math.PI * super.jariJari * tinggi + alas;
+        luasPermukaan = 2 * Math.PI * super.jariJari * tinggi + super.luas;
+        return luasPermukaan;
+    }
+
+    public double hitungLuasPermukaan(double newR) {
+        System.out.println("apakah anda akan mengedit value jari-jari?");
+        if(jawab == 'Y' || jawab =='y'){
+            Scanner inp = new Scanner(System.in);
+            System.out.println("Masukan nilai jari-jari baru");
+            newR = inp.nextDouble();
+            luasPermukaan = 2 * Math.PI * newR * tinggi + super.hitungLuas(newR);
+            return luasPermukaan;
+        }else{
+            luasPermukaan = 2 * Math.PI * super.jariJari * tinggi + super.luas;
+            return luasPermukaan;
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 package BangunGeometry;
 
 import java.util.Scanner;
-import BangunGeometry.Lingkaran;
 
 public class Bola extends Lingkaran {
     protected double volume;
@@ -31,7 +30,7 @@ public class Bola extends Lingkaran {
             Scanner inp = new Scanner(System.in);
             System.out.println("Masukan nilai jari-jari baru");
             newR = inp.nextDouble();
-            volume = (4.0 / 3.0) * Math.PI * super.hitungLuas() * newR;
+            volume = (4.0 / 3.0) * Math.PI * super.hitungLuas(newR) * newR;
             return volume;
         }else{
             volume = (4.0 / 3.0) * super.jariJari * super.luas;

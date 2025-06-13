@@ -15,12 +15,24 @@ public class PersegiPanjang extends BangunDatar {
     
     @Override
     public double hitungLuas() {
-        return panjang * lebar;
+        luas = panjang * lebar;
+        return luas;
+    }
+
+    public double hitungLuas(double newP, double newL) {
+        luas = newP * newL;
+        return luas;
     }
 
     @Override
     public double hitungKeliling() {
-        return 2 * (panjang + lebar);
+        keliling = 2 * (panjang + lebar);
+        return keliling;
+    }
+
+    public double hitungKeliling(double newP, double newL) {
+        keliling = 2 * (newP + newL);
+        return keliling;
     }
 
     @Override

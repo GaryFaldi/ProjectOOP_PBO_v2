@@ -4,11 +4,9 @@ public class Persegi extends BangunDatar {
     protected double sisi;
     public double luas;
     public double keliling;
-    public double newS;
 
     public Persegi(double sisi) {
         this.sisi = sisi;
-        this.newS = newS;
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }
@@ -19,7 +17,7 @@ public class Persegi extends BangunDatar {
         return luas;
     }
 
-    public double hitungLuas(newS) {
+    public double hitungLuas(double newS) {
         luas = newS * newS;
         return luas;
     }
@@ -30,7 +28,7 @@ public class Persegi extends BangunDatar {
         return keliling;
     }
 
-    public double hitungKeliling(newS) {
+    public double hitungKeliling(double newS) {
         keliling = 4 * newS;
         return keliling;
     }

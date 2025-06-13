@@ -19,12 +19,24 @@ public class LayangLayang extends BangunDatar {
     
     @Override
     public double hitungLuas() {
-        return 0.5 * diagonal1 * diagonal2;
+        luas = 0.5 * diagonal1 * diagonal2;
+        return luas;
+    }
+
+    public double hitungLuas(double newD1, double newD2) {
+        luas = 0.5 * newD1 * newD2;
+        return luas;
     }
     
     @Override
     public double hitungKeliling() {
-        return 2 * (sisiPendek + sisiPanjang);
+        keliling = 2 * (sisiPendek + sisiPanjang);
+        return keliling;
+    }
+
+    public double hitungKeliling(double newPendek, double newPanjang) {
+        keliling = 2 * (newPendek + newPanjang);
+        return keliling;
     }
 
     @Override

@@ -2,8 +2,8 @@ package BangunGeometry;
 
 public class JajarGenjang extends BangunDatar {
     protected double alas;
-    private double tinggi;
-    private double sisiMiring;
+    protected double tinggi;
+    protected double sisiMiring;
     public double luas;
     public double keliling;
 
@@ -17,12 +17,24 @@ public class JajarGenjang extends BangunDatar {
     
     @Override
     public double hitungLuas() {
-        return alas * tinggi;
+        luas = alas * tinggi;
+        return luas;
+    }
+    
+    public double hitungLuas(double newAlas, double newTinggi) {
+        luas = newAlas * newTinggi;
+        return luas;
     }
     
     @Override
     public double hitungKeliling() {
-        return 2 * (alas + sisiMiring);
+        keliling = 2 * (alas + sisiMiring);
+        return keliling;
+    }
+    
+    public double hitungKeliling(double newAlas, double newSM) {
+        keliling = 2 * (newAlas + newSM);
+        return keliling;
     }
 
     @Override
