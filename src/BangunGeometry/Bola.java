@@ -3,8 +3,8 @@ package BangunGeometry;
 import java.util.Scanner;
 
 public class Bola extends Lingkaran {
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
     protected double newR;
     char  jawab  = 'Y';
 

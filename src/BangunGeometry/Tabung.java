@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Tabung extends Lingkaran {
     private final double tinggi;
-    public double volume;
-    public double luasPermukaan;
+    protected double volume;
+    protected double luasPermukaan;
     protected double newR;
     char  jawab  = 'Y';
 

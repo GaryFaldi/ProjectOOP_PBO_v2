@@ -1,9 +1,9 @@
 package BangunGeometry;
 
 public class BelahKetupat extends BangunDatar {
-    private double diagonal1;
-    private double diagonal2;
-    private double sisi;
+    protected double diagonal1;
+    protected double diagonal2;
+    protected double sisi;
     public double luas;
     public double keliling;
 
