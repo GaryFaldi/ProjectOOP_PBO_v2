@@ -1,6 +1,9 @@
 package BangunGeometry;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Main {
     public static void main(String[] args) {
@@ -640,17 +643,38 @@ public class Main {
         System.out.print("Masukkan tinggi limas: ");
         double tinggiLimas = scanner.nextDouble();
 
-        Persegi limas = new LimasPersegi(sisi, tinggiLimas);  // Polymorphism
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + limas.getNama());
-        System.out.println("Sisi Alas     : " + sisi);
-        System.out.println("Tinggi Limas  : " + tinggiLimas);
+        try {
+            Future<Double> volumeFuture = executor.submit(() -> {
+                return (1.0/3) * Math.pow(sisi, 2) * tinggiLimas;
+            });
 
-        // Downcasting untuk akses atribut khusus
-        LimasPersegi limasCast = (LimasPersegi) limas;
-        System.out.println("Volume        : " + limasCast.volume);
-        System.out.println("Luas Permukaan: " + limasCast.luasPermukaan);
+            Future<Double> luasPermukaanFuture = executor.submit(() -> {
+                double luasAlas = Math.pow(sisi, 2);
+                double tinggiSegitiga = Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(sisi/2.0, 2));
+                double luasSisiTegak = 4 * (0.5 * sisi * tinggiSegitiga);
+                return luasAlas + luasSisiTegak;
+            });
+
+            Persegi limas = new LimasPersegi(sisi, tinggiLimas);
+            LimasPersegi limasCast = (LimasPersegi) limas;
+
+            limasCast.volume = volumeFuture.get();
+            limasCast.luasPermukaan = luasPermukaanFuture.get();
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + limas.getNama());
+            System.out.println("Sisi Alas     : " + sisi);
+            System.out.println("Tinggi Limas  : " + tinggiLimas);
+            System.out.println("Volume        : " + limasCast.volume);
+            System.out.println("Luas Permukaan: " + limasCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
     private static void hitungPrismaPersegi(Scanner scanner, double sisi) {
@@ -658,17 +682,37 @@ public class Main {
         System.out.print("Masukkan tinggi prisma: ");
         double tinggiPrisma = scanner.nextDouble();
 
-        Persegi prisma = new PrismaPersegi(sisi, tinggiPrisma);  // Polymorphism
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + prisma.getNama());
-        System.out.println("Sisi Alas     : " + sisi);
-        System.out.println("Tinggi Prisma : " + tinggiPrisma);
+        try {
+            Future<Double> volumeFuture = executor.submit(() -> {
+                return Math.pow(sisi, 2) * tinggiPrisma;
+            });
 
-        // Downcasting untuk mengakses atribut khusus child
-        PrismaPersegi pPersegiCast = (PrismaPersegi) prisma;
-        System.out.println("Volume        : " + pPersegiCast.volume);
-        System.out.println("Luas Permukaan: " + pPersegiCast.luasPermukaan);
+            Future<Double> luasPermukaanFuture = executor.submit(() -> {
+                double luasAlasDanTutup = 2 * Math.pow(sisi, 2);
+                double luasSisiTegak = 4 * (sisi * tinggiPrisma);
+                return luasAlasDanTutup + luasSisiTegak;
+            });
+
+            Persegi prisma = new PrismaPersegi(sisi, tinggiPrisma);
+            PrismaPersegi pPersegiCast = (PrismaPersegi) prisma;
+
+            pPersegiCast.volume = volumeFuture.get();
+            pPersegiCast.luasPermukaan = luasPermukaanFuture.get();
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + prisma.getNama());
+            System.out.println("Sisi Alas     : " + sisi);
+            System.out.println("Tinggi Prisma : " + tinggiPrisma);
+            System.out.println("Volume        : " + pPersegiCast.volume);
+            System.out.println("Luas Permukaan: " + pPersegiCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -677,18 +721,57 @@ public class Main {
         System.out.print("Masukkan tinggi limas: ");
         double tinggiLimas = scanner.nextDouble();
 
-        PersegiPanjang limas = new LimasPersegiPanjang(panjang, lebar, tinggiLimas);  // Polymorphism
+        ExecutorService executor = Executors.newFixedThreadPool(3); // 3 thread untuk perhitungan paralel
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + limas.getNama());
-        System.out.println("Panjang Alas  : " + panjang);
-        System.out.println("Lebar Alas    : " + lebar);
-        System.out.println("Tinggi Limas  : " + tinggiLimas);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = panjang * lebar;
+                return (1.0/3) * luasAlas * tinggiLimas;
+            });
 
-        // Downcasting
-        LimasPersegiPanjang lPersegiPanjangCast = (LimasPersegiPanjang) limas;
-        System.out.println("Volume        : " + lPersegiPanjangCast.volume);
-        System.out.println("Luas Permukaan: " + lPersegiPanjangCast.luasPermukaan);
+            // Hitung tinggi segitiga sisi panjang secara paralel
+            Future<Double> tinggiSegitigaPanjangFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(lebar/2.0, 2));
+            });
+
+            // Hitung tinggi segitiga sisi lebar secara paralel
+            Future<Double> tinggiSegitigaLebarFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(panjang/2.0, 2));
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double tinggiSegitigaPanjang = tinggiSegitigaPanjangFuture.get();
+            double tinggiSegitigaLebar = tinggiSegitigaLebarFuture.get();
+
+            // Hitung luas permukaan setelah mendapatkan semua komponen
+            double luasAlas = panjang * lebar;
+            double luasSisiPanjang = 2 * (0.5 * panjang * tinggiSegitigaPanjang);
+            double luasSisiLebar = 2 * (0.5 * lebar * tinggiSegitigaLebar);
+            double luasPermukaan = luasAlas + luasSisiPanjang + luasSisiLebar;
+
+            // Buat objek limas
+            PersegiPanjang limas = new LimasPersegiPanjang(panjang, lebar, tinggiLimas);
+            LimasPersegiPanjang lPersegiPanjangCast = (LimasPersegiPanjang) limas;
+
+            // Set nilai hasil perhitungan
+            lPersegiPanjangCast.volume = volume;
+            lPersegiPanjangCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + limas.getNama());
+            System.out.println("Panjang Alas  : " + panjang);
+            System.out.println("Lebar Alas    : " + lebar);
+            System.out.println("Tinggi Limas  : " + tinggiLimas);
+            System.out.println("Volume        : " + lPersegiPanjangCast.volume);
+            System.out.println("Luas Permukaan: " + lPersegiPanjangCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -697,19 +780,41 @@ public class Main {
         System.out.print("Masukkan tinggi prisma: ");
         double tinggiPrisma = scanner.nextDouble();
 
-        // Polymorphism
-        PersegiPanjang prisma = new PrismaPersegiPanjang(panjang, lebar, tinggiPrisma);
+        ExecutorService executor = Executors.newFixedThreadPool(2); // 2 thread untuk perhitungan paralel
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + prisma.getNama());
-        System.out.println("Panjang Alas  : " + panjang);
-        System.out.println("Lebar Alas    : " + lebar);
-        System.out.println("Tinggi Prisma : " + tinggiPrisma);
+        try {
+            // Hitung volume dan luas permukaan secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                return panjang * lebar * tinggiPrisma;
+            });
 
-        // Downcasting
-        PrismaPersegiPanjang pPersegiCast = (PrismaPersegiPanjang) prisma;
-        System.out.println("Volume        : " + pPersegiCast.volume);
-        System.out.println("Luas Permukaan: " + pPersegiCast.luasPermukaan);
+            Future<Double> luasPermukaanFuture = executor.submit(() -> {
+                double luasAlasDanTutup = 2 * (panjang * lebar);
+                double luasSisiTegak = 2 * ((panjang * tinggiPrisma) + (lebar * tinggiPrisma));
+                return luasAlasDanTutup + luasSisiTegak;
+            });
+
+            // Buat objek prisma
+            PersegiPanjang prisma = new PrismaPersegiPanjang(panjang, lebar, tinggiPrisma);
+            PrismaPersegiPanjang pPersegiCast = (PrismaPersegiPanjang) prisma;
+
+            // Set nilai hasil perhitungan
+            pPersegiCast.volume = volumeFuture.get();
+            pPersegiCast.luasPermukaan = luasPermukaanFuture.get();
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + prisma.getNama());
+            System.out.println("Panjang Alas  : " + panjang);
+            System.out.println("Lebar Alas    : " + lebar);
+            System.out.println("Tinggi Prisma : " + tinggiPrisma);
+            System.out.println("Volume        : " + pPersegiCast.volume);
+            System.out.println("Luas Permukaan: " + pPersegiCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -718,22 +823,48 @@ public class Main {
         System.out.print("Masukkan tinggi limas: ");
         double tinggiLimas = scanner.nextDouble();
 
-        // Polymorphism
-        Segitiga limas = new LimasSegitiga(alas, tinggi, sisiA, sisiB, sisiC, tinggiLimas);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun    : " + limas.getNama());
-        System.out.println("Alas Segitiga  : " + alas);
-        System.out.println("Tinggi Segitiga: " + tinggi);
-        System.out.println("Sisi A         : " + sisiA);
-        System.out.println("Sisi B         : " + sisiB);
-        System.out.println("Sisi C         : " + sisiC);
-        System.out.println("Tinggi Limas   : " + tinggiLimas);
+        try {
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * alas * tinggi;
+                return (1.0/3) * luasAlas * tinggiLimas;
+            });
 
-        // Downcasting
-        LimasSegitiga lSegitigaCast = (LimasSegitiga) limas;
-        System.out.println("Volume         : " + lSegitigaCast.volume);
-        System.out.println("Luas Permukaan : " + lSegitigaCast.luasPermukaan);
+            Future<Double> luasPermukaanFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * alas * tinggi;
+
+                // Hitung tinggi segitiga sisi tegak
+                double tinggiSegitiga1 = Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(tinggi/3.0, 2));
+                double tinggiSegitiga2 = Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(tinggi/3.0, 2));
+                double tinggiSegitiga3 = Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(tinggi/3.0, 2));
+
+                double luasSisiTegak = 0.5 * (sisiA * tinggiSegitiga1 + sisiB * tinggiSegitiga2 + sisiC * tinggiSegitiga3);
+                return luasAlas + luasSisiTegak;
+            });
+
+            Segitiga limas = new LimasSegitiga(alas, tinggi, sisiA, sisiB, sisiC, tinggiLimas);
+            LimasSegitiga lSegitigaCast = (LimasSegitiga) limas;
+
+            lSegitigaCast.volume = volumeFuture.get();
+            lSegitigaCast.luasPermukaan = luasPermukaanFuture.get();
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun    : " + limas.getNama());
+            System.out.println("Alas Segitiga  : " + alas);
+            System.out.println("Tinggi Segitiga: " + tinggi);
+            System.out.println("Sisi A         : " + sisiA);
+            System.out.println("Sisi B         : " + sisiB);
+            System.out.println("Sisi C         : " + sisiC);
+            System.out.println("Tinggi Limas   : " + tinggiLimas);
+            System.out.println("Volume         : " + lSegitigaCast.volume);
+            System.out.println("Luas Permukaan : " + lSegitigaCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -742,21 +873,58 @@ public class Main {
         System.out.print("Masukkan tinggi prisma: ");
         double tinggiPrisma = scanner.nextDouble();
 
-        Segitiga prisma = new PrismaSegitiga(alas, tinggi, sisiA, sisiB, sisiC, tinggiPrisma);  // Polymorphism
+        ExecutorService executor = Executors.newFixedThreadPool(3); // 3 thread untuk perhitungan paralel
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun    : " + prisma.getNama());
-        System.out.println("Alas Segitiga  : " + alas);
-        System.out.println("Tinggi Segitiga: " + tinggi);
-        System.out.println("Sisi A         : " + sisiA);
-        System.out.println("Sisi B         : " + sisiB);
-        System.out.println("Sisi C         : " + sisiC);
-        System.out.println("Tinggi Prisma  : " + tinggiPrisma);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * alas * tinggi;
+                return luasAlas * tinggiPrisma;
+            });
 
-        // Downcasting
-        PrismaSegitiga pSegitigaCast = (PrismaSegitiga) prisma;
-        System.out.println("Volume         : " + pSegitigaCast.volume);
-        System.out.println("Luas Permukaan : " + pSegitigaCast.luasPermukaan);
+            // Hitung keliling alas secara paralel
+            Future<Double> kelilingAlasFuture = executor.submit(() -> {
+                return sisiA + sisiB + sisiC;
+            });
+
+            // Hitung luas sisi tegak secara paralel (tanpa menunggu keliling)
+            Future<Double> luasSisiTegakFuture = executor.submit(() -> {
+                return (sisiA + sisiB + sisiC) * tinggiPrisma;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double kelilingAlas = kelilingAlasFuture.get();
+            double luasSisiTegak = luasSisiTegakFuture.get();
+
+            // Hitung luas permukaan
+            double luasAlasDanTutup = 2 * (0.5 * alas * tinggi);
+            double luasPermukaan = luasAlasDanTutup + luasSisiTegak;
+
+            // Buat objek prisma
+            Segitiga prisma = new PrismaSegitiga(alas, tinggi, sisiA, sisiB, sisiC, tinggiPrisma);
+            PrismaSegitiga pSegitigaCast = (PrismaSegitiga) prisma;
+
+            // Set nilai hasil perhitungan
+            pSegitigaCast.volume = volume;
+            pSegitigaCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun    : " + prisma.getNama());
+            System.out.println("Alas Segitiga  : " + alas);
+            System.out.println("Tinggi Segitiga: " + tinggi);
+            System.out.println("Sisi A         : " + sisiA);
+            System.out.println("Sisi B         : " + sisiB);
+            System.out.println("Sisi C         : " + sisiC);
+            System.out.println("Tinggi Prisma  : " + tinggiPrisma);
+            System.out.println("Volume         : " + pSegitigaCast.volume);
+            System.out.println("Luas Permukaan : " + pSegitigaCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -765,20 +933,56 @@ public class Main {
         System.out.print("Masukkan tinggi prisma: ");
         double tinggiPrisma = scanner.nextDouble();
 
-        // Polymorphism: menggunakan referensi superclass JajarGenjang
-        JajarGenjang prisma = new PrismaJajarGenjang(alas, tinggi, sisiMiring, tinggiPrisma);
+        ExecutorService executor = Executors.newFixedThreadPool(3); // 3 thread untuk perhitungan paralel
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + prisma.getNama());
-        System.out.println("Alas          : " + alas);
-        System.out.println("Tinggi        : " + tinggi);
-        System.out.println("Sisi Miring   : " + sisiMiring);
-        System.out.println("Tinggi Prisma : " + tinggiPrisma);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = alas * tinggi;
+                return luasAlas * tinggiPrisma;
+            });
 
-        // Downcasting agar bisa akses volume & luasPermukaan
-        PrismaJajarGenjang pJajarCast = (PrismaJajarGenjang) prisma;
-        System.out.println("Volume        : " + pJajarCast.volume);
-        System.out.println("Luas Permukaan: " + pJajarCast.luasPermukaan);
+            // Hitung keliling alas secara paralel
+            Future<Double> kelilingAlasFuture = executor.submit(() -> {
+                return 2 * (alas + sisiMiring);
+            });
+
+            // Hitung luas sisi tegak secara paralel
+            Future<Double> luasSisiTegakFuture = executor.submit(() -> {
+                return 2 * (alas + sisiMiring) * tinggiPrisma;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double kelilingAlas = kelilingAlasFuture.get();
+            double luasSisiTegak = luasSisiTegakFuture.get();
+
+            // Hitung luas permukaan
+            double luasAlasDanTutup = 2 * (alas * tinggi);
+            double luasPermukaan = luasAlasDanTutup + luasSisiTegak;
+
+            // Buat objek prisma
+            JajarGenjang prisma = new PrismaJajarGenjang(alas, tinggi, sisiMiring, tinggiPrisma);
+            PrismaJajarGenjang pJajarCast = (PrismaJajarGenjang) prisma;
+
+            // Set nilai hasil perhitungan
+            pJajarCast.volume = volume;
+            pJajarCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + prisma.getNama());
+            System.out.println("Alas          : " + alas);
+            System.out.println("Tinggi        : " + tinggi);
+            System.out.println("Sisi Miring   : " + sisiMiring);
+            System.out.println("Tinggi Prisma : " + tinggiPrisma);
+            System.out.println("Volume        : " + pJajarCast.volume);
+            System.out.println("Luas Permukaan: " + pJajarCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -787,68 +991,195 @@ public class Main {
         System.out.print("Masukkan tinggi limas: ");
         double tinggiLimas = scanner.nextDouble();
 
-        // Polymorphism
-        JajarGenjang limas = new LimasJajarGenjang(alas, tinggi, sisiMiring, tinggiLimas);
+        ExecutorService executor = Executors.newFixedThreadPool(4); // 4 thread untuk perhitungan kompleks
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + limas.getNama());
-        System.out.println("Alas          : " + alas);
-        System.out.println("Tinggi        : " + tinggi);
-        System.out.println("Sisi Miring   : " + sisiMiring);
-        System.out.println("Tinggi Limas  : " + tinggiLimas);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = alas * tinggi;
+                return (1.0/3) * luasAlas * tinggiLimas;
+            });
 
-        // Downcasting
-        LimasJajarGenjang lJajarCast = (LimasJajarGenjang) limas;
-        System.out.println("Volume        : " + lJajarCast.volume);
-        System.out.println("Luas Permukaan: " + lJajarCast.luasPermukaan);
+            // Hitung tinggi segitiga sisi alas secara paralel
+            Future<Double> tinggiSegitigaAlasFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(tinggi/2.0, 2));
+            });
+
+            // Hitung tinggi segitiga sisi miring secara paralel
+            Future<Double> tinggiSegitigaMiringFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(tinggi/2.0, 2));
+            });
+
+            // Hitung luas alas secara paralel
+            Future<Double> luasAlasFuture = executor.submit(() -> {
+                return alas * tinggi;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double tinggiSegitigaAlas = tinggiSegitigaAlasFuture.get();
+            double tinggiSegitigaMiring = tinggiSegitigaMiringFuture.get();
+            double luasAlas = luasAlasFuture.get();
+
+            // Hitung luas permukaan
+            double luasSegitigaAlas = 2 * (0.5 * alas * tinggiSegitigaAlas);
+            double luasSegitigaMiring = 2 * (0.5 * sisiMiring * tinggiSegitigaMiring);
+            double luasPermukaan = luasAlas + luasSegitigaAlas + luasSegitigaMiring;
+
+            // Buat objek limas
+            JajarGenjang limas = new LimasJajarGenjang(alas, tinggi, sisiMiring, tinggiLimas);
+            LimasJajarGenjang lJajarCast = (LimasJajarGenjang) limas;
+
+            // Set nilai hasil perhitungan
+            lJajarCast.volume = volume;
+            lJajarCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + limas.getNama());
+            System.out.println("Alas          : " + alas);
+            System.out.println("Tinggi        : " + tinggi);
+            System.out.println("Sisi Miring   : " + sisiMiring);
+            System.out.println("Tinggi Limas  : " + tinggiLimas);
+            System.out.println("Volume        : " + lJajarCast.volume);
+            System.out.println("Luas Permukaan: " + lJajarCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
-    private static void hitungPrismaTrapesium(Scanner scanner, double sisiA, double sisiB, double tinggi, double sisiC, double sisiD) {
+    private static void hitungPrismaTrapesium(Scanner scanner, double sisiAtas, double sisiBawah, double tinggi, double sisiMiringKiri, double sisiMiringKanan) {
         System.out.println("\n=== Menghitung Prisma Trapesium ===");
         System.out.print("Masukkan tinggi prisma: ");
         double tinggiPrisma = scanner.nextDouble();
 
-        // Polymorphism: menggunakan superclass Trapesium sebagai tipe referensi
-        Trapesium prisma = new PrismaTrapesium(sisiA, sisiB, tinggi, sisiC, sisiD, tinggiPrisma);
+        ExecutorService executor = Executors.newFixedThreadPool(3); // 3 thread untuk perhitungan paralel
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun    : " + prisma.getNama());
-        System.out.println("Sisi Sejajar A : " + sisiA);
-        System.out.println("Sisi Sejajar B : " + sisiB);
-        System.out.println("Tinggi Trapesium: " + tinggi);
-        System.out.println("Sisi C         : " + sisiC);
-        System.out.println("Sisi D         : " + sisiD);
-        System.out.println("Tinggi Prisma  : " + tinggiPrisma);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * (sisiAtas + sisiBawah) * tinggi;
+                return luasAlas * tinggiPrisma;
+            });
 
-        // Downcasting ke PrismaTrapesium untuk akses atribut volume dan luasPermukaan
-        PrismaTrapesium pTrapesiumCast = (PrismaTrapesium) prisma;
-        System.out.println("Volume         : " + pTrapesiumCast.volume);
-        System.out.println("Luas Permukaan : " + pTrapesiumCast.luasPermukaan);
+            // Hitung keliling alas secara paralel
+            Future<Double> kelilingAlasFuture = executor.submit(() -> {
+                return sisiAtas + sisiBawah + sisiMiringKiri + sisiMiringKanan;
+            });
+
+            // Hitung luas sisi tegak secara paralel
+            Future<Double> luasSisiTegakFuture = executor.submit(() -> {
+                return (sisiAtas + sisiBawah + sisiMiringKiri + sisiMiringKanan) * tinggiPrisma;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double kelilingAlas = kelilingAlasFuture.get();
+            double luasSisiTegak = luasSisiTegakFuture.get();
+
+            // Hitung luas permukaan
+            double luasAlasDanTutup = 2 * (0.5 * (sisiAtas + sisiBawah) * tinggi);
+            double luasPermukaan = luasAlasDanTutup + luasSisiTegak;
+
+            // Buat objek prisma
+            Trapesium prisma = new PrismaTrapesium(sisiAtas, sisiBawah, tinggi, sisiMiringKiri, sisiMiringKanan, tinggiPrisma);
+            PrismaTrapesium pTrapesiumCast = (PrismaTrapesium) prisma;
+
+            // Set nilai hasil perhitungan
+            pTrapesiumCast.volume = volume;
+            pTrapesiumCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun     : " + prisma.getNama());
+            System.out.println("Sisi Atas       : " + sisiAtas);
+            System.out.println("Sisi Bawah      : " + sisiBawah);
+            System.out.println("Tinggi Trapesium: " + tinggi);
+            System.out.println("Sisi Miring Kiri: " + sisiMiringKiri);
+            System.out.println("Sisi Miring Kanan: " + sisiMiringKanan);
+            System.out.println("Tinggi Prisma   : " + tinggiPrisma);
+            System.out.println("Volume          : " + pTrapesiumCast.volume);
+            System.out.println("Luas Permukaan  : " + pTrapesiumCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
-    private static void hitungLimasTrapesium(Scanner scanner, double sisiA, double sisiB, double tinggi, double sisiC, double sisiD) {
+    private static void hitungLimasTrapesium(Scanner scanner, double sisiAtas, double sisiBawah, double tinggi, double sisiMiringKiri, double sisiMiringKanan) {
         System.out.println("\n=== Menghitung Limas Trapesium ===");
         System.out.print("Masukkan tinggi limas: ");
         double tinggiLimas = scanner.nextDouble();
 
-        // Polymorphism
-        Trapesium limas = new LimasTrapesium(sisiA, sisiB, tinggi, sisiC, sisiD, tinggiLimas);
+        ExecutorService executor = Executors.newFixedThreadPool(4); // 4 thread untuk perhitungan kompleks
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun    : " + limas.getNama());
-        System.out.println("Sisi Sejajar A : " + sisiA);
-        System.out.println("Sisi Sejajar B : " + sisiB);
-        System.out.println("Tinggi Trapesium: " + tinggi);
-        System.out.println("Sisi C         : " + sisiC);
-        System.out.println("Sisi D         : " + sisiD);
-        System.out.println("Tinggi Limas   : " + tinggiLimas);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * (sisiAtas + sisiBawah) * tinggi;
+                return (1.0/3) * luasAlas * tinggiLimas;
+            });
 
-        // Downcasting
-        LimasTrapesium lTrapesiumCast = (LimasTrapesium) limas;
-        System.out.println("Volume         : " + lTrapesiumCast.volume);
-        System.out.println("Luas Permukaan : " + lTrapesiumCast.luasPermukaan);
+            // Hitung tinggi segitiga sisi atas secara paralel
+            Future<Double> tinggiSegitigaAtasFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(tinggi/2.0, 2));
+            });
+
+            // Hitung tinggi segitiga sisi bawah secara paralel
+            Future<Double> tinggiSegitigaBawahFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(tinggi/2.0, 2));
+            });
+
+            // Hitung tinggi segitiga sisi miring secara paralel
+            Future<Double> tinggiSegitigaMiringFuture = executor.submit(() -> {
+                double x = (sisiBawah - sisiAtas) / 2;
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(x, 2) + Math.pow(tinggi, 2));
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double tinggiSegitigaAtas = tinggiSegitigaAtasFuture.get();
+            double tinggiSegitigaBawah = tinggiSegitigaBawahFuture.get();
+            double tinggiSegitigaMiring = tinggiSegitigaMiringFuture.get();
+
+            // Hitung luas permukaan
+            double luasAlas = 0.5 * (sisiAtas + sisiBawah) * tinggi;
+            double luasSegitigaAtas = 0.5 * sisiAtas * tinggiSegitigaAtas;
+            double luasSegitigaBawah = 0.5 * sisiBawah * tinggiSegitigaBawah;
+            double luasSegitigaMiringKiri = 0.5 * sisiMiringKiri * tinggiSegitigaMiring;
+            double luasSegitigaMiringKanan = 0.5 * sisiMiringKanan * tinggiSegitigaMiring;
+            double luasPermukaan = luasAlas + luasSegitigaAtas + luasSegitigaBawah +
+                    luasSegitigaMiringKiri + luasSegitigaMiringKanan;
+
+            // Buat objek limas
+            Trapesium limas = new LimasTrapesium(sisiAtas, sisiBawah, tinggi, sisiMiringKiri, sisiMiringKanan, tinggiLimas);
+            LimasTrapesium lTrapesiumCast = (LimasTrapesium) limas;
+
+            // Set nilai hasil perhitungan
+            lTrapesiumCast.volume = volume;
+            lTrapesiumCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun     : " + limas.getNama());
+            System.out.println("Sisi Atas       : " + sisiAtas);
+            System.out.println("Sisi Bawah      : " + sisiBawah);
+            System.out.println("Tinggi Trapesium: " + tinggi);
+            System.out.println("Sisi Miring Kiri: " + sisiMiringKiri);
+            System.out.println("Sisi Miring Kanan: " + sisiMiringKanan);
+            System.out.println("Tinggi Limas    : " + tinggiLimas);
+            System.out.println("Volume          : " + lTrapesiumCast.volume);
+            System.out.println("Luas Permukaan  : " + lTrapesiumCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -857,20 +1188,56 @@ public class Main {
         System.out.print("Masukkan tinggi prisma: ");
         double tinggiPrisma = scanner.nextDouble();
 
-        // Polymorphism: deklarasi pakai superclass
-        BelahKetupat prisma = new PrismaBelahKetupat(d1, d2, sisi, tinggiPrisma);
+        ExecutorService executor = Executors.newFixedThreadPool(3); // 3 thread untuk perhitungan paralel
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + prisma.getNama());
-        System.out.println("Diagonal 1    : " + d1);
-        System.out.println("Diagonal 2    : " + d2);
-        System.out.println("Sisi          : " + sisi);
-        System.out.println("Tinggi Prisma : " + tinggiPrisma);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * d1 * d2;
+                return luasAlas * tinggiPrisma;
+            });
 
-        // Downcasting agar bisa akses atribut spesifik dari PrismaBelahKetupat
-        PrismaBelahKetupat pBelahKetupatCast = (PrismaBelahKetupat) prisma;
-        System.out.println("Volume        : " + pBelahKetupatCast.volume);
-        System.out.println("Luas Permukaan: " + pBelahKetupatCast.luasPermukaan);
+            // Hitung keliling alas secara paralel
+            Future<Double> kelilingAlasFuture = executor.submit(() -> {
+                return 4 * sisi;
+            });
+
+            // Hitung luas sisi tegak secara paralel
+            Future<Double> luasSisiTegakFuture = executor.submit(() -> {
+                return 4 * sisi * tinggiPrisma;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double kelilingAlas = kelilingAlasFuture.get();
+            double luasSisiTegak = luasSisiTegakFuture.get();
+
+            // Hitung luas permukaan
+            double luasAlasDanTutup = 2 * (0.5 * d1 * d2);
+            double luasPermukaan = luasAlasDanTutup + luasSisiTegak;
+
+            // Buat objek prisma
+            BelahKetupat prisma = new PrismaBelahKetupat(d1, d2, sisi, tinggiPrisma);
+            PrismaBelahKetupat pBelahKetupatCast = (PrismaBelahKetupat) prisma;
+
+            // Set nilai hasil perhitungan
+            pBelahKetupatCast.volume = volume;
+            pBelahKetupatCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + prisma.getNama());
+            System.out.println("Diagonal 1    : " + d1);
+            System.out.println("Diagonal 2    : " + d2);
+            System.out.println("Sisi          : " + sisi);
+            System.out.println("Tinggi Prisma : " + tinggiPrisma);
+            System.out.println("Volume        : " + pBelahKetupatCast.volume);
+            System.out.println("Luas Permukaan: " + pBelahKetupatCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
@@ -879,64 +1246,187 @@ public class Main {
         System.out.print("Masukkan tinggi limas: ");
         double tinggiLimas = scanner.nextDouble();
 
-        // Polymorphism
-        BelahKetupat limas = new LimasBelahKetupat(d1, d2, sisi, tinggiLimas);
+        ExecutorService executor = Executors.newFixedThreadPool(4); // 4 thread untuk perhitungan kompleks
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + limas.getNama());
-        System.out.println("Diagonal 1    : " + d1);
-        System.out.println("Diagonal 2    : " + d2);
-        System.out.println("Sisi          : " + sisi);
-        System.out.println("Tinggi Limas  : " + tinggiLimas);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * d1 * d2;
+                return (1.0/3) * luasAlas * tinggiLimas;
+            });
 
-        // Downcasting
-        LimasBelahKetupat lBelahKetupatCast = (LimasBelahKetupat) limas;
-        System.out.println("Volume        : " + lBelahKetupatCast.volume);
-        System.out.println("Luas Permukaan: " + lBelahKetupatCast.luasPermukaan);
+            // Hitung tinggi segitiga sisi 1 secara paralel
+            Future<Double> tinggiSegitiga1Future = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(d1/2.0, 2));
+            });
+
+            // Hitung tinggi segitiga sisi 2 secara paralel
+            Future<Double> tinggiSegitiga2Future = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(d2/2.0, 2));
+            });
+
+            // Hitung luas alas secara paralel
+            Future<Double> luasAlasFuture = executor.submit(() -> {
+                return 0.5 * d1 * d2;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double tinggiSegitiga1 = tinggiSegitiga1Future.get();
+            double tinggiSegitiga2 = tinggiSegitiga2Future.get();
+            double luasAlas = luasAlasFuture.get();
+
+            // Hitung luas permukaan
+            double luasSegitiga1 = 2 * (0.5 * d1 * tinggiSegitiga2);
+            double luasSegitiga2 = 2 * (0.5 * d2 * tinggiSegitiga1);
+            double luasPermukaan = luasAlas + luasSegitiga1 + luasSegitiga2;
+
+            // Buat objek limas
+            BelahKetupat limas = new LimasBelahKetupat(d1, d2, sisi, tinggiLimas);
+            LimasBelahKetupat lBelahKetupatCast = (LimasBelahKetupat) limas;
+
+            // Set nilai hasil perhitungan
+            lBelahKetupatCast.volume = volume;
+            lBelahKetupatCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + limas.getNama());
+            System.out.println("Diagonal 1    : " + d1);
+            System.out.println("Diagonal 2    : " + d2);
+            System.out.println("Sisi          : " + sisi);
+            System.out.println("Tinggi Limas  : " + tinggiLimas);
+            System.out.println("Volume        : " + lBelahKetupatCast.volume);
+            System.out.println("Luas Permukaan: " + lBelahKetupatCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
-
-    private static void hitungPrismaLayangLayang(Scanner scanner, double d1, double d2, double sisiA, double sisiB) {
+    private static void hitungPrismaLayangLayang(Scanner scanner, double d1, double d2, double sisiPendek, double sisiPanjang) {
         System.out.println("\n=== Menghitung Prisma Layang-Layang ===");
         System.out.print("Masukkan tinggi prisma: ");
         double tinggiPrisma = scanner.nextDouble();
 
-        // Gunakan polymorphism: deklarasikan dengan tipe superclass
-        LayangLayang prisma = new PrismaLayangLayang(d1, d2, sisiA, sisiB, tinggiPrisma);
+        ExecutorService executor = Executors.newFixedThreadPool(3); // 3 thread untuk perhitungan paralel
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + prisma.getNama());
-        System.out.println("Diagonal 1    : " + d1);
-        System.out.println("Diagonal 2    : " + d2);
-        System.out.println("Sisi Pendek   : " + sisiA);
-        System.out.println("Sisi Panjang  : " + sisiB);
-        System.out.println("Tinggi Prisma : " + tinggiPrisma);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * d1 * d2;
+                return luasAlas * tinggiPrisma;
+            });
 
-        // Lakukan downcasting untuk mengakses atribut spesifik subclass
-        PrismaLayangLayang pLayangLayangCast = (PrismaLayangLayang) prisma;
-        System.out.println("Volume        : " + pLayangLayangCast.volume);
-        System.out.println("Luas Permukaan: " + pLayangLayangCast.luasPermukaan);
+            // Hitung keliling alas secara paralel
+            Future<Double> kelilingAlasFuture = executor.submit(() -> {
+                return 2 * (sisiPendek + sisiPanjang);
+            });
+
+            // Hitung luas sisi tegak secara paralel
+            Future<Double> luasSisiTegakFuture = executor.submit(() -> {
+                return 2 * (sisiPendek + sisiPanjang) * tinggiPrisma;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double kelilingAlas = kelilingAlasFuture.get();
+            double luasSisiTegak = luasSisiTegakFuture.get();
+
+            // Hitung luas permukaan
+            double luasAlasDanTutup = 2 * (0.5 * d1 * d2);
+            double luasPermukaan = luasAlasDanTutup + luasSisiTegak;
+
+            // Buat objek prisma
+            LayangLayang prisma = new PrismaLayangLayang(d1, d2, sisiPendek, sisiPanjang, tinggiPrisma);
+            PrismaLayangLayang pLayangLayangCast = (PrismaLayangLayang) prisma;
+
+            // Set nilai hasil perhitungan
+            pLayangLayangCast.volume = volume;
+            pLayangLayangCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + prisma.getNama());
+            System.out.println("Diagonal 1    : " + d1);
+            System.out.println("Diagonal 2    : " + d2);
+            System.out.println("Sisi Pendek   : " + sisiPendek);
+            System.out.println("Sisi Panjang  : " + sisiPanjang);
+            System.out.println("Tinggi Prisma : " + tinggiPrisma);
+            System.out.println("Volume        : " + pLayangLayangCast.volume);
+            System.out.println("Luas Permukaan: " + pLayangLayangCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
 
-    private static void hitungLimasLayangLayang(Scanner scanner, double d1, double d2, double sisiA, double sisiB) {
+    private static void hitungLimasLayangLayang(Scanner scanner, double d1, double d2, double sisiPendek, double sisiPanjang) {
         System.out.println("\n=== Menghitung Limas Layang-Layang ===");
         System.out.print("Masukkan tinggi limas: ");
         double tinggiLimas = scanner.nextDouble();
 
-        LayangLayang limas = new LimasLayangLayang(d1, d2, sisiA, sisiB, tinggiLimas);
+        ExecutorService executor = Executors.newFixedThreadPool(4); // 4 thread untuk perhitungan kompleks
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + limas.getNama());
-        System.out.println("Diagonal 1    : " + d1);
-        System.out.println("Diagonal 2    : " + d2);
-        System.out.println("Sisi Pendek   : " + sisiA);
-        System.out.println("Sisi Panjang  : " + sisiB);
-        System.out.println("Tinggi Limas  : " + tinggiLimas);
+        try {
+            // Hitung volume secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                double luasAlas = 0.5 * d1 * d2;
+                return (1.0/3) * luasAlas * tinggiLimas;
+            });
 
-        LimasLayangLayang lLayangLayangCast = (LimasLayangLayang) limas;
-        System.out.println("Volume        : " + lLayangLayangCast.volume);
-        System.out.println("Luas Permukaan: " + lLayangLayangCast.luasPermukaan);
+            // Hitung tinggi segitiga sisi pendek secara paralel
+            Future<Double> tinggiSegitigaPendekFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(d1/2.0, 2));
+            });
+
+            // Hitung tinggi segitiga sisi panjang secara paralel
+            Future<Double> tinggiSegitigaPanjangFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(tinggiLimas, 2) + Math.pow(d2/2.0, 2));
+            });
+
+            // Hitung luas alas secara paralel
+            Future<Double> luasAlasFuture = executor.submit(() -> {
+                return 0.5 * d1 * d2;
+            });
+
+            // Tunggu semua hasil perhitungan
+            double volume = volumeFuture.get();
+            double tinggiSegitigaPendek = tinggiSegitigaPendekFuture.get();
+            double tinggiSegitigaPanjang = tinggiSegitigaPanjangFuture.get();
+            double luasAlas = luasAlasFuture.get();
+
+            // Hitung luas permukaan
+            double luasSegitigaPendek = 2 * (0.5 * sisiPendek * tinggiSegitigaPendek);
+            double luasSegitigaPanjang = 2 * (0.5 * sisiPanjang * tinggiSegitigaPanjang);
+            double luasPermukaan = luasAlas + luasSegitigaPendek + luasSegitigaPanjang;
+
+            // Buat objek limas
+            LayangLayang limas = new LimasLayangLayang(d1, d2, sisiPendek, sisiPanjang, tinggiLimas);
+            LimasLayangLayang lLayangLayangCast = (LimasLayangLayang) limas;
+
+            // Set nilai hasil perhitungan
+            lLayangLayangCast.volume = volume;
+            lLayangLayangCast.luasPermukaan = luasPermukaan;
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + limas.getNama());
+            System.out.println("Diagonal 1    : " + d1);
+            System.out.println("Diagonal 2    : " + d2);
+            System.out.println("Sisi Pendek   : " + sisiPendek);
+            System.out.println("Sisi Panjang  : " + sisiPanjang);
+            System.out.println("Tinggi Limas  : " + tinggiLimas);
+            System.out.println("Volume        : " + lLayangLayangCast.volume);
+            System.out.println("Luas Permukaan: " + lLayangLayangCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
     private static void hitungJuringLingkaran(Scanner scanner, double jariJari) {
@@ -1007,16 +1497,37 @@ public class Main {
         System.out.print("Masukkan tinggi tabung: ");
         double tinggi = scanner.nextDouble();
 
-        // Menggunakan polymorphism dengan Lingkaran sebagai parent
-        Lingkaran tabung = new Tabung(jariJari, tinggi);
+        // Membuat thread pool dengan 2 thread
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + tabung.getNama());
+        try {
+            // Submit tugas penghitungan volume dan luas permukaan secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                return Math.PI * Math.pow(jariJari, 2) * tinggi;
+            });
 
-        // Untuk mengakses properti khusus Tabung, kita perlu casting
-        Tabung tabungCast = (Tabung) tabung;
-        System.out.println("Volume        : " + tabungCast.volume);
-        System.out.println("Luas Permukaan: " + tabungCast.luasPermukaan);
+            Future<Double> luasPermukaanFuture = executor.submit(() -> {
+                return 2 * Math.PI * jariJari * (jariJari + tinggi);
+            });
+
+            // Membuat objek Tabung dengan hasil perhitungan
+            Lingkaran tabung = new Tabung(jariJari, tinggi);
+            Tabung tabungCast = (Tabung) tabung;
+
+            // Mengambil hasil dari Future
+            tabungCast.volume = volumeFuture.get();
+            tabungCast.luasPermukaan = luasPermukaanFuture.get();
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + tabung.getNama());
+            System.out.println("Volume        : " + tabungCast.volume);
+            System.out.println("Luas Permukaan: " + tabungCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
+        }
     }
 
     private static void hitungKerucut(Scanner scanner, double jariJari) {
@@ -1024,35 +1535,40 @@ public class Main {
         System.out.print("Masukkan tinggi kerucut: ");
         double tinggi = scanner.nextDouble();
 
-        // Menggunakan polymorphism dengan Lingkaran sebagai parent
-        Lingkaran kerucut = new Kerucut(jariJari, tinggi);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + kerucut.getNama());
+        try {
+            // Menghitung garis pelukis secara paralel
+            Future<Double> garisPelukisFuture = executor.submit(() -> {
+                return Math.sqrt(Math.pow(jariJari, 2) + Math.pow(tinggi, 2));
+            });
 
-        // Untuk mengakses properti khusus Kerucut, kita perlu casting
-        Kerucut kerucutCast = (Kerucut) kerucut;
-        System.out.println("Volume        : " + kerucutCast.volume);
-        System.out.println("Luas Permukaan: " + kerucutCast.luasPermukaan);
+            // Menghitung volume dan luas permukaan secara paralel
+            Future<Double> volumeFuture = executor.submit(() -> {
+                return (1.0/3) * Math.PI * Math.pow(jariJari, 2) * tinggi;
+            });
 
-        // Opsi lanjutan untuk kerucut terpancung dengan pilihan lebih jelas
-        while (true) {
-            System.out.println("\nPilih opsi lanjutan:");
-            System.out.println("1. Hitung Kerucut Terpancung");
-            System.out.println("2. Kembali ke menu bangun ruang");
-            System.out.print("Masukkan pilihan (1-2): ");
+            double garisPelukis = garisPelukisFuture.get();
 
-            int pilihan = scanner.nextInt();
+            Future<Double> luasPermukaanFuture = executor.submit(() -> {
+                return Math.PI * jariJari * (jariJari + garisPelukis);
+            });
 
-            switch(pilihan) {
-                case 1:
-                    hitungKerucutTerpancung(scanner, jariJari, tinggi);
-                    break;
-                case 2:
-                    return; // Kembali ke menu bangun ruang
-                default:
-                    System.out.println("Pilihan tidak valid.");
-            }
+            Lingkaran kerucut = new Kerucut(jariJari, tinggi);
+            Kerucut kerucutCast = (Kerucut) kerucut;
+
+            kerucutCast.volume = volumeFuture.get();
+            kerucutCast.luasPermukaan = luasPermukaanFuture.get();
+
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + kerucut.getNama());
+            System.out.println("Volume        : " + kerucutCast.volume);
+            System.out.println("Luas Permukaan: " + kerucutCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
         }
     }
 
@@ -1081,42 +1597,33 @@ public class Main {
     private static void hitungBola(Scanner scanner, double jariJari) {
         System.out.println("\n=== Menghitung Bola ===");
 
-        Lingkaran bola = new Bola(jariJari);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        System.out.println("\nHasil Perhitungan:");
-        System.out.println("Nama Bangun   : " + bola.getNama());
-        System.out.println("Jari-jari     : " + jariJari);
+        try {
+            Future<Double> volumeFuture = executor.submit(() -> {
+                return (4.0/3) * Math.PI * Math.pow(jariJari, 3);
+            });
 
-        Bola ktCast = (Bola) bola;
-        System.out.println("Volume        : " + ktCast.volume);
-        System.out.println("Luas Permukaan: " + ktCast.luasPermukaan);
+            Future<Double> luasPermukaanFuture = executor.submit(() -> {
+                return 4 * Math.PI * Math.pow(jariJari, 2);
+            });
 
-        // Opsi lanjutan untuk bagian bola
-        while (true) {
-            System.out.println("\nPilih opsi lanjutan:");
-            System.out.println("1. Hitung Tembereng Bola");
-            System.out.println("2. Hitung Juring Bola");
-            System.out.println("3. Hitung Cincin Bola");
-            System.out.println("4. Kembali ke menu bangun ruang");
-            System.out.print("Masukkan pilihan (1-4): ");
+            Lingkaran bola = new Bola(jariJari);
+            Bola bolaCast = (Bola) bola;
 
-            int pilihan = scanner.nextInt();
+            bolaCast.volume = volumeFuture.get();
+            bolaCast.luasPermukaan = luasPermukaanFuture.get();
 
-            switch(pilihan) {
-                case 1:
-                    hitungTemberengBola(scanner, jariJari);
-                    break;
-                case 2:
-                    hitungJuringBola(scanner, jariJari);
-                    break;
-                case 3:
-                    hitungCincinBola(scanner, jariJari);
-                    break;
-                case 4:
-                    return; // Kembali ke menu bangun ruang
-                default:
-                    System.out.println("Pilihan tidak valid.");
-            }
+            System.out.println("\nHasil Perhitungan:");
+            System.out.println("Nama Bangun   : " + bola.getNama());
+            System.out.println("Jari-jari     : " + jariJari);
+            System.out.println("Volume        : " + bolaCast.volume);
+            System.out.println("Luas Permukaan: " + bolaCast.luasPermukaan);
+
+        } catch (Exception e) {
+            System.out.println("Error dalam perhitungan: " + e.getMessage());
+        } finally {
+            executor.shutdown();
         }
     }
 
