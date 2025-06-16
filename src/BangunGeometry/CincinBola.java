@@ -2,7 +2,7 @@ package BangunGeometry;
 
 import java.util.Scanner;
 
-public class CincinBola extends Bola {
+public class CincinBola extends Bola implements Runnable {
     private final double jariJariDalam;
     public double volume;
     public double luasPermukaan;
@@ -75,5 +75,15 @@ public class CincinBola extends Bola {
     @Override
     public String getNama() {
         return "Cincin Bola";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Jari-jari: " + jariJari);
+        System.out.println("Jari-jari Dalam: " + jariJariDalam);
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

@@ -21,6 +21,10 @@ public class PrismaTrapesium extends Trapesium {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggiPrisma() {
+        return tinggiPrisma;
+    }
+
     public double hitungVolume() {
         volume = super.luas * tinggiPrisma;
         return volume;
@@ -74,5 +78,13 @@ public class PrismaTrapesium extends Trapesium {
     @Override
     public String getNama() {
         return "Prisma Trapesium";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

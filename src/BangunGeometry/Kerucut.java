@@ -35,6 +35,10 @@ public class Kerucut extends Lingkaran {
         }
     }
 
+    public double getTinggi() {
+        return tinggi;
+    }
+
     public double hitungLuasPermukaan() {
         double s = Math.sqrt(super.jariJari * super.jariJari + tinggi * tinggi);
         luasPermukaan = Math.PI * super.jariJari * (super.jariJari + s);
@@ -60,5 +64,15 @@ public class Kerucut extends Lingkaran {
     @Override
     public String getNama() {
         return "Kerucut";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Jari-jari: " + jariJari);
+        System.out.println("Tinggi: " + tinggi);
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

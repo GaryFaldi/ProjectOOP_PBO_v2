@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class Segitiga extends BangunDatar {
+public class Segitiga extends BangunDatar implements Runnable {
     protected double tinggi;
     protected double sisiA;
     protected double sisiB;
@@ -15,6 +15,22 @@ public class Segitiga extends BangunDatar {
         this.sisiC = sisiC;
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
+    }
+
+    public double getTinggi() {
+        return tinggi;
+    }
+
+    public double getSisiA() {
+        return sisiA;
+    }
+
+    public double getSisiB() {
+        return sisiB;
+    }
+
+    public double getSisiC() {
+        return sisiC;
     }
 
     @Override
@@ -41,5 +57,17 @@ public class Segitiga extends BangunDatar {
 
     @Override
     public String getNama() { return "Segitiga"; }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Tinggi: " + tinggi);
+        System.out.println("sisi A: " + sisiA);
+        System.out.println("sisi B: " + sisiB);
+        System.out.println("sisi C: " + sisiC);
+        System.out.println("Luas: " + hitungLuas());
+        System.out.println("Keliling: " + hitungKeliling());
+        System.out.println("--------------------------");
+    }
 
 }

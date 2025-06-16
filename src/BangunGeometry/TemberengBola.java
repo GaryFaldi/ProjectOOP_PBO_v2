@@ -58,4 +58,12 @@ public class TemberengBola extends Bola {
     public String getNama() {
         return "Tembereng Bola";
     }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
+    }
 }

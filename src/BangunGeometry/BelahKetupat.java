@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class BelahKetupat extends BangunDatar {
+public class BelahKetupat extends BangunDatar implements Runnable {
     protected double diagonal1;
     protected double diagonal2;
     protected double sisi;
@@ -14,7 +14,19 @@ public class BelahKetupat extends BangunDatar {
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }
-    
+
+    public double getSisi() {
+        return sisi;
+    }
+
+    public double getDiagonal1() {
+        return diagonal1;
+    }
+
+    public double getDiagonal2() {
+        return diagonal2;
+    }
+
     @Override
     public double hitungLuas() {
         luas = 0.5 * diagonal1 * diagonal2;
@@ -35,6 +47,17 @@ public class BelahKetupat extends BangunDatar {
     public double hitungKeliling(double newS) {
         keliling = 4 * newS;
         return keliling;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Sisi: " + sisi);
+        System.out.println("Diagonal 1: " + diagonal1);
+        System.out.println("Diagonal 2: " + diagonal2);
+        System.out.println("Luas: " + hitungLuas());
+        System.out.println("Keliling: " + hitungKeliling());
+        System.out.println("--------------------------");
     }
 
     @Override

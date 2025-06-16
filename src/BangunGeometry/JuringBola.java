@@ -67,4 +67,14 @@ public class JuringBola extends Bola {
     public String getNama() {
         return "Juring Bola";
     }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Jari-jari: " + jariJari);
+        System.out.println("Sudut: " + sudut);
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
+    }
 }

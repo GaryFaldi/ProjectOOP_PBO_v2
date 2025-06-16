@@ -21,6 +21,10 @@ public class LimasLayangLayang extends LayangLayang {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggiLimas() {
+        return tinggiLimas;
+    }
+
     public double hitungVolume() {
         volume = (1.0 / 3.0) * super.luas * tinggiLimas;
         return volume;
@@ -90,5 +94,13 @@ public class LimasLayangLayang extends LayangLayang {
     @Override
     public String getNama() {
         return "Limas Layang-Layang";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

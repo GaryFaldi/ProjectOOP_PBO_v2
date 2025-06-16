@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class Trapesium extends BangunDatar {
+public class Trapesium extends BangunDatar implements Runnable {
     protected double sisiAtas;
     protected double sisiBawah;
     protected double tinggi;
@@ -17,6 +17,26 @@ public class Trapesium extends BangunDatar {
         this.sisiMiringKanan = sisiMiringKanan;
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
+    }
+
+    public double getTinggi() {
+        return tinggi;
+    }
+
+    public double getSisiAtas() {
+        return sisiAtas;
+    }
+
+    public double getSisiBawah() {
+        return sisiBawah;
+    }
+
+    public double getSisiMiringKanan() {
+        return sisiMiringKanan;
+    }
+
+    public double getSisiMiringKiri() {
+        return sisiMiringKiri;
     }
 
     @Override
@@ -43,6 +63,19 @@ public class Trapesium extends BangunDatar {
 
     @Override
     public String getNama() {
-        return "Traoesium";
+        return "Trapesium";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("sisi Atas: " + sisiAtas);
+        System.out.println("sisi Bawah: " + sisiBawah);
+        System.out.println("Tinggi: " + tinggi);
+        System.out.println("sisi Miring Kiri: " + sisiMiringKiri);
+        System.out.println("sisi Miring Kanan: " + sisiMiringKanan);
+        System.out.println("Luas: " + hitungLuas());
+        System.out.println("Keliling: " + hitungKeliling());
+        System.out.println("--------------------------");
     }
 }

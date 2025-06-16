@@ -17,6 +17,10 @@ public class PrismaBelahKetupat extends BelahKetupat {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggi() {
+        return tinggi;
+    }
+
     public double hitungVolume() {
         volume = super.luas * tinggi;
         return volume;
@@ -62,5 +66,13 @@ public class PrismaBelahKetupat extends BelahKetupat {
     @Override
     public String getNama() {
         return "Prisma Belah Ketupat";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

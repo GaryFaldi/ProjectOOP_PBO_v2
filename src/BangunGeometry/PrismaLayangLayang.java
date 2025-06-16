@@ -19,6 +19,10 @@ public class PrismaLayangLayang extends LayangLayang {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggiPrisma() {
+        return tinggiPrisma;
+    }
+
     public double hitungVolume() {
         volume = super.luas * tinggiPrisma;
         return volume;
@@ -71,5 +75,13 @@ public class PrismaLayangLayang extends LayangLayang {
     @Override
     public String getNama() {
         return "Prisma Layang-Layang";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

@@ -1,6 +1,6 @@
 package BangunGeometry;
 
-public class PersegiPanjang extends BangunDatar {
+public class PersegiPanjang extends BangunDatar implements Runnable {
     protected double panjang;
     protected double lebar;
     public double luas;
@@ -12,7 +12,15 @@ public class PersegiPanjang extends BangunDatar {
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }
-    
+
+    public double getLebar() {
+        return lebar;
+    }
+
+    public double getPanjang() {
+        return panjang;
+    }
+
     @Override
     public double hitungLuas() {
         luas = panjang * lebar;
@@ -38,5 +46,15 @@ public class PersegiPanjang extends BangunDatar {
     @Override
     public String getNama() {
         return "PersegiPanjang";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Panjang: " + panjang);
+        System.out.println("Lebar: " + lebar);
+        System.out.println("Luas: " + hitungLuas());
+        System.out.println("Keliling: " + hitungKeliling());
+        System.out.println("--------------------------");
     }
 }

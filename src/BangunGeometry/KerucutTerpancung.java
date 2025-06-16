@@ -63,4 +63,15 @@ public class KerucutTerpancung extends Kerucut {
     public String getNama() {
         return "Kerucut Terpancung";
     }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Jari-jari: " + jariJari);
+        System.out.println("Jari-jari Kecil: " + jariJariKecil);
+        System.out.println("Tinggi: " + tinggi);
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
+    }
 }

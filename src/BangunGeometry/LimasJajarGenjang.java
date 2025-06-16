@@ -18,6 +18,11 @@ public class LimasJajarGenjang extends JajarGenjang {
     }
 
     @Override
+    public double getTinggi() {
+        return tinggi;
+    }
+
+    @Override
     public String getNama() {
         return "Limas Jajar Genjang";
     }
@@ -63,5 +68,13 @@ public class LimasJajarGenjang extends JajarGenjang {
             luasPermukaan = super.luas + luasSisiTegak;
             return luasPermukaan;
         }
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

@@ -57,4 +57,13 @@ public class Bola extends Lingkaran {
             return luasPermukaan;
         }
     }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Jari-jari: " + jariJari);
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
+    }
 }

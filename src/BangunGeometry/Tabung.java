@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Tabung extends Lingkaran {
     private final double tinggi;
-    protected double volume;
-    protected double luasPermukaan;
+    public double volume;
+    public double luasPermukaan;
     protected double newR;
     char  jawab  = 'Y';
 
@@ -14,6 +14,10 @@ public class Tabung extends Lingkaran {
         this.tinggi = tinggi;
         this.volume = hitungVolume();
         this.luasPermukaan = hitungLuasPermukaan();
+    }
+
+    public double getTinggi() {
+        return tinggi;
     }
 
     public double hitungVolume() {
@@ -57,5 +61,13 @@ public class Tabung extends Lingkaran {
     @Override
     public String getNama() {
         return "Tabung";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

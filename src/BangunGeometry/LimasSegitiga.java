@@ -21,6 +21,10 @@ public class LimasSegitiga extends Segitiga {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggiLimas() {
+        return tinggiLimas;
+    }
+
     public double hitungVolume() {
         volume = (1.0 / 3.0) * super.luas * tinggiLimas;
         return volume;
@@ -80,5 +84,13 @@ public class LimasSegitiga extends Segitiga {
     @Override
     public String getNama() {
         return "Limas Segitiga";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

@@ -18,6 +18,10 @@ public class LimasBelahKetupat extends BelahKetupat {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggi() {
+        return tinggi;
+    }
+
     public double hitungVolume() {
         volume = (1.0 / 3.0) * super.luas * tinggi;
         return volume;
@@ -65,5 +69,13 @@ public class LimasBelahKetupat extends BelahKetupat {
     @Override
     public String getNama() {
         return "Limas Belah Ketupat";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

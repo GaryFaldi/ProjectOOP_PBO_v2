@@ -2,7 +2,7 @@ package BangunGeometry;
 
 import java.util.Scanner;
 
-public class TemberengLingkaran extends Lingkaran {
+public class TemberengLingkaran extends Lingkaran implements Runnable {
     private double tinggiTembereng;
     public double luasTemberengLingkaran;
     public double kelilingTemberengLingkaran;
@@ -14,6 +14,11 @@ public class TemberengLingkaran extends Lingkaran {
         this.tinggiTembereng = tinggiTembereng;
         this.luasTemberengLingkaran = hitungLuas();
         this.kelilingTemberengLingkaran = hitungKeliling();
+    }
+
+
+    public double getTinggiTembereng() {
+        return tinggiTembereng;
     }
 
     @Override
@@ -77,5 +82,15 @@ public class TemberengLingkaran extends Lingkaran {
     @Override
     public String getNama(){
         return "TemberengLingkaran";
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Tinggi Tembereng: " + tinggiTembereng);
+        System.out.println("Jari-jari: " + jariJari);
+        System.out.println("Luas: " + hitungLuas());
+        System.out.println("Keliling: " + hitungKeliling());
+        System.out.println("--------------------------");
     }
 }

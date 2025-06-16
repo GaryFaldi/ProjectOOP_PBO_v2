@@ -17,6 +17,10 @@ public class PrismaJajarGenjang extends JajarGenjang {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggiPrisma() {
+        return tinggiPrisma;
+    }
+
     @Override
     public String getNama() {
         return "Prisma Jajar Genjang";
@@ -66,5 +70,13 @@ public class PrismaJajarGenjang extends JajarGenjang {
             luasPermukaan = (2 * super.luas) + (super.keliling * tinggiPrisma);
             return luasPermukaan;
         }
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }

@@ -15,6 +15,10 @@ public class PrismaPersegi extends Persegi {
         this.luasPermukaan = hitungLuasPermukaan();
     }
 
+    public double getTinggiPrisma() {
+        return tinggiPrisma;
+    }
+
     @Override
     public String getNama() {
         return "Prisma Persegi";
@@ -56,5 +60,13 @@ public class PrismaPersegi extends Persegi {
             luasPermukaan = 2 * super.luas + super.keliling * tinggiPrisma;
             return luasPermukaan;
         }
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Thread " + getNama() + " sedang berjalan...");
+        System.out.println("Luas Permukaan: " + hitungLuasPermukaan());
+        System.out.println("Volume: " + hitungVolume());
+        System.out.println("--------------------------");
     }
 }
